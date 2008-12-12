@@ -9,10 +9,10 @@ namespace :slices do
     task :preflight do
     end
     
-    # implement this to perform any database related setup steps
-    desc "Migrate the database"
-    task :migrate do
-    end
+    # # implement this to perform any database related setup steps
+    # desc "Migrate the database"
+    # task :migrate do
+    # end
     
   end
 end

@@ -3,6 +3,7 @@ if defined?(Merb::Plugins)
   $:.unshift File.dirname(__FILE__)
 
   dependency 'merb-slices', :immediate => true
+  dependency 'maruku', ">= 0.5.9"
   Merb::Plugins.add_rakefiles "merb_static_pages_slice/merbtasks", "merb_static_pages_slice/slicetasks", "merb_static_pages_slice/spectasks"
 
   # Register the Slice for the current host application
@@ -21,9 +22,9 @@ if defined?(Merb::Plugins)
   module MerbStaticPagesSlice
     
     # Slice metadata
-    self.description = "MerbStaticPagesSlice is a chunky Merb slice!"
+    self.description = "MerbStaticPagesSlice let you easily serve static pages"
     self.version = "0.0.1"
-    self.author = "Engine Yard"
+    self.author = "Matt Aimonetti"
     
     # Stub classes loaded hook - runs before LoadClasses BootLoader
     # right after a slice's classes have been loaded internally.
@@ -53,11 +54,11 @@ if defined?(Merb::Plugins)
     #   to avoid potential conflicts with global named routes.
     def self.setup_router(scope)
       # example of a named route
-      scope.match('/index(.:format)').to(:controller => 'main', :action => 'index').name(:index)
+      scope.match('/:page_name(.:format)').to(:controller => 'pages', :action => 'show').name(:page)
       # the slice is mounted at /merb_static_pages_slice - note that it comes before default_routes
-      scope.match('/').to(:controller => 'main', :action => 'index').name(:home)
+      # scope.match('/').to(:controller => 'pages', :action => 'show').name(:pages)
       # enable slice-level default routes by default
-      scope.default_routes
+      # scope.default_routes
     end
     
   end
@@ -72,7 +73,10 @@ if defined?(Merb::Plugins)
   # ...
   #
   # Any component path that hasn't been set will default to MerbStaticPagesSlice.root
-  #
+  
+  # Add a path to find the pages
+  MerbStaticPagesSlice.push_path(:pages, MerbStaticPagesSlice.root / 'app' / 'pages', "**/*.markdown") unless MerbStaticPagesSlice.dir_for(:pages)
+  
   # Or just call setup_default_structure! to setup a basic Merb MVC structure.
   MerbStaticPagesSlice.setup_default_structure!
   

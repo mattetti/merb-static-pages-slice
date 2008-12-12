@@ -44,3 +44,13 @@ Spec::Runner.configure do |config|
   config.include(Merb::Test::ControllerHelper)
   config.include(Merb::Test::SliceHelper)
 end
+
+Merb::Test.add_helpers do
+  def mount_slice
+    Merb::Router.prepare { add_slice(:MerbStaticPagesSlice, "static") } if standalone?
+  end
+
+  def dismount_slice
+    Merb::Router.reset! if standalone?
+  end
+end
