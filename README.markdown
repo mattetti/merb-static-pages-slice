@@ -1,7 +1,7 @@
 # MerbStaticPagesSlice
 
 Write static content using the markdown format and serve easily in your app.
-This slice was extracted/inspired by the work I did on the [Merb Book](http://github/com/mattetti/merb-book)
+This slice was extracted/inspired by the work I did on the [Merb Book](http://github.com/mattetti/merb-book)
 
 
 To be able to use this slice, you need to do ``2 things``:
